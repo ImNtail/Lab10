@@ -1,0 +1,6 @@
+D:\MS Visual Studio Projects\Lab10\Lab10\bin\Debug\Lab10.exe.config
+D:\MS Visual Studio Projects\Lab10\Lab10\bin\Debug\Lab10.exe
+D:\MS Visual Studio Projects\Lab10\Lab10\bin\Debug\Lab10.pdb
+D:\MS Visual Studio Projects\Lab10\Lab10\obj\Debug\Lab10.csprojResolveAssemblyReference.cache
+D:\MS Visual Studio Projects\Lab10\Lab10\obj\Debug\Lab10.exe
+D:\MS Visual Studio Projects\Lab10\Lab10\obj\Debug\Lab10.pdb
