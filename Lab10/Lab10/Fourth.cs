@@ -70,39 +70,41 @@ namespace Lab10
         public static void Execute()
         {
             Random rand = new Random();
-            int[,] distances = {
-                { -1, 50, 75, -1, -1, -1, -1, -1 },
-                { 50, -1, -1, -1, -1, 130, 35, -1},
-				{ 75, -1, -1, 60, -1, 55, -1, 140},
-				{ -1, -1, 60, -1, 95, -1, -1, -1},
-				{ -1, -1, -1, 95, -1, 40, -1, -1},
-				{ -1, 130, 55, -1, 40, -1, -1, -1},
-				{ -1, 35, -1, -1, -1, -1, -1, 140},
-				{ -1, -1, 140, -1, -1, -1, 140, -1} };
+            int[,] distances = new int[10, 10];
+            for (int i = 0; i < distances.GetLength(0); i++)
+                for (int j = 0; j < distances.GetLength(1); j++)
+                    distances[i, j] = -1;
+            for (int i = 0; i < distances.GetLength(0); i++)
+                distances[i, rand.Next(0, i)] = rand.Next(40, 120);
+            for (int i = 0; i < distances.GetLength(0); i++)
+                for (int j = 0; j < distances.GetLength(1); j++)
+                    if (j > i)
+                        distances[i, j] = distances[j, i];
+            for (int i = 0; i < distances.GetLength(0); i++)
+            {
+                for (int j = 0; j < distances.GetLength(1); j++)
+                    Console.Write("{0, -3} ", distances[i, j]);
+                Console.WriteLine("\n");
+            }
+            Console.WriteLine();
             int city = 0, limit = 200;
-            while (city < 1 || city > 8)
+            while (city < 1 || city > distances.GetLength(0))
             {
                 Console.Write("Enter the number of city (from 1 to " + distances.GetLength(0) + "): ");
                 city = int.Parse(Console.ReadLine());
             }
             Console.WriteLine();
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                    Console.Write("{0, -3} ", distances[i, j]);
-                Console.WriteLine("\n");
-            }
-            Graph g = new Graph(distances, 8);
+            Graph g = new Graph(distances, distances.GetLength(0));
             Dictionary<string, int> distancesDictionary = new Dictionary<string, int>();
             Console.WriteLine("\nPaths:\n");
-            for (int j = 0; j < 8; j++)
+            for (int j = 0; j < distances.GetLength(0); j++)
                 if (!distancesDictionary.ContainsKey("From " + city + " to " + j + 1) && city != j + 1)
-                    {
-                        var stackBFS = g.BFS(city - 1, j);
-                        ShowPath(stackBFS);
-                        Console.WriteLine();
-                        DictionaryAdd(stackBFS, distances, ref distancesDictionary, city);
-                    }
+                {
+                    var stackBFS = g.BFS(city - 1, j);
+                    ShowPath(stackBFS);
+                    Console.WriteLine();
+                    DictionaryAdd(stackBFS, distances, ref distancesDictionary, city);
+                }
             Console.WriteLine("\nDistances:\n");
             foreach (var item in distancesDictionary)
                 if (item.Value <= limit)
